@@ -840,20 +840,23 @@ verifyUpgrade() {
   fi
 
   isInstalled "zimbra-ldap"
-  if [ x$PKGINSTALLED != "x" ]; then
-    runAsZimbra "ldap start"
+  LDAP_INSTALLED=$PKGINSTALLED
+  if [ "x$LDAP_INSTALLED" != "x" ]; then
+	  runAsZimbra "ldap start"
+  fi
+  isInstalled "zimbra-store"
+  STORE_INSTALLED=$PKGINSTALLED
+  if [ "x$LDAP_INSTALLED" != "x" ] || [ "x$STORE_INSTALLED" != "x" ]; then
     # Upgrade tests specific to NE only
     if [ x"$ZMTYPE_CURRENT" = "xNETWORK" ] && [ x"$ZMTYPE_INSTALLABLE" = "xNETWORK" ]; then
       if [ x"$SKIP_ACTIVATION_CHECK" = "xno" ]; then
         if [ -x "bin/checkLicense.pl" ]; then
-          echo "Validating existing license is not expired and qualifies for upgrade"
+          echo "Validating whether an existing license is expired or not and checking if it qualifies for an upgrade"
           echo $HOSTNAME | egrep -qe 'eng.vmware.com$|eng.zimbra.com$|lab.zimbra.com$|zimbradev.com$' > /dev/null 2>&1
           if [ $? = 0 ]; then
-            # echo "Running bin/checkLicense.pl -i -v $ZM_INST_VERSION"
-            `bin/checkLicense.pl -i -v $ZM_INST_VERSION >/dev/null`
+              bin/checkLicense.pl -i -uv $ZM_INST_VERSION -cv $ZM_CUR_VERSION
           else
-            # echo "Running bin/checkLicense.pl -v $ZM_INST_VERSION"
-            `bin/checkLicense.pl -v $ZM_INST_VERSION >/dev/null`
+              bin/checkLicense.pl -uv $ZM_INST_VERSION -cv $ZM_CUR_VERSION
           fi
           licenseRC=$?;
           if [ $licenseRC != 0 ]; then
@@ -870,10 +873,13 @@ verifyUpgrade() {
               echo "Error: No upgrade version supplied"
               exit 1
             elif [ $licenseRC = 2 ]; then
-              echo "Error: No license file found"
+              echo "Error: license key not found"
               exit 1
+            elif [ $licenseRC = 7 ]; then
+              echo "Error: The license key should be an alphanumeric string of 18-24 characters without any special characters"
+	      exit 1
             elif [ $licenseRC = 1 ]; then
-              echo "Error: License is expired or cannot be upgraded."
+              echo "Error: License is expired or not authorized for upgrade or cannot be upgraded."
               echo "       Aborting upgrade"
               exit 1
             else
@@ -970,17 +976,6 @@ verifyLicenseActivationServer() {
     return
   fi
 
-  # if we specify an activation presume its valid
-  if [ x"$ACTIVATION" != "x" ] && [ -e $ACTIVATION ]; then
-    if [ ! -d "/opt/zimbra/conf" ]; then
-      mkdir -p /opt/zimbra/conf
-    fi
-    cp -f $ACTIVATION /opt/zimbra/conf/ZCSLicense-activated.xml
-    chown zimbra:zimbra /opt/zimbra/conf/ZCSLicense-activated.xml
-    chmod 444 /opt/zimbra/conf/ZCSLicense-activated.xml
-    return
-  fi
-
   # if all else fails make sure we can contact the activation server for automated activation
   if [ ${ZM_CUR_MAJOR} -ge "7" ]; then
     if [ ${ZM_CUR_MAJOR} -eq "7" -a ${ZM_CUR_MINOR} -ge "1" ]; then
@@ -1053,15 +1048,6 @@ activationWarning() {
 
 verifyLicenseAvailable() {
 
-  if [ x"$LICENSE" != "x" ] && [ -e $LICENSE ]; then
-    if [ ! -d "/opt/zimbra/conf" ]; then
-      mkdir -p /opt/zimbra/conf
-    fi
-    cp -f $LICENSE /opt/zimbra/conf/ZCSLicense.xml
-    chown zimbra:zimbra /opt/zimbra/conf/ZCSLicense.xml 2> /dev/null
-    chmod 444 /opt/zimbra/conf/ZCSLicense.xml
-  fi
-
   if [ x"$AUTOINSTALL" = "xyes" ] || [ x"$UNINSTALL" = "xyes" ] || [ x"$SOFTWAREONLY" = "xyes" ]; then
     return
   fi
@@ -1076,7 +1062,7 @@ verifyLicenseAvailable() {
      return
   fi
 
-  echo "Checking for available license file..."
+  echo "Checking for available license..."
 
 
   # use the tool if it exists
