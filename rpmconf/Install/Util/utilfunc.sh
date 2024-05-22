@@ -311,8 +311,9 @@ checkDatabaseIntegrity() {
 						sleep 2
 					done
 				fi
-				perl bin/zmdbintegrityreport -v -r
+				MAILBOXDBINTEGRITYOUTPUT=$(perl bin/zmdbintegrityreport -v -r 2>&1)
 				MAILBOXDBINTEGRITYSTATUS=$?
+				echo "$MAILBOXDBINTEGRITYOUTPUT"
 				if [ x"$SQLSTARTED" != "x" ]; then
 					su - zimbra -c "/opt/zimbra/bin/mysqladmin -s ping" 2>/dev/null
 					if [ $? = 0 ]; then
@@ -327,9 +328,12 @@ checkDatabaseIntegrity() {
 					fi
 				fi
 				if [ $MAILBOXDBINTEGRITYSTATUS != 0 ]; then
-					askYN "Do you want to continue with database errors?" "N"
-					if [ "$response" != "yes" ]; then
+					if echo "$MAILBOXDBINTEGRITYOUTPUT" | grep -q "Database errors found" && echo "$MAILBOXDBINTEGRITYOUTPUT" | grep -q "Orphan accounts detected"; then
 						exit $MAILBOXDBINTEGRITYSTATUS
+					elif echo "$MAILBOXDBINTEGRITYOUTPUT" | grep -q "Database errors found"; then
+						exit $MAILBOXDBINTEGRITYSTATUS
+					elif echo "$MAILBOXDBINTEGRITYOUTPUT" | grep -q "Orphan accounts detected"; then
+						echo "Orphan accounts detected. Continuing with the upgrade."
 					fi
 				fi
 				break
