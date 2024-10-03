@@ -2,7 +2,7 @@
 
 FILE=/etc/yum.repos.d/CentOS-AppStream.repo
 cat > $FILE <<- EOM
-[AppStream]
+[appstream]
 name=CentOS-$releasever - AppStream
 #mirrorlist=http://#mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=AppStream&infra=$infra
 baseurl=http://vault.centos.org/$contentdir/$releasever/AppStream/$basearch/os/
@@ -13,7 +13,7 @@ EOM
 
 FILE=/etc/yum.repos.d/CentOS-Base.repo
 cat > $FILE <<- EOM
-[BaseOS]
+[baseos]
 name=CentOS-$releasever - Base
 #mirrorlist=http://#mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=BaseOS&infra=$infra
 baseurl=http://vault.centos.org/$contentdir/$releasever/BaseOS/$basearch/os/
