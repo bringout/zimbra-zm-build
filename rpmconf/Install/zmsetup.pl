@@ -7310,6 +7310,7 @@ sub applyConfig {
        setLdapServerConfig($config{HOSTNAME}, 'zimbraNetworkAdminEnabled', 'FALSE');
     }
 
+<<<<<<< HEAD
     my $zimbraNetworkAdminNGEnabled = getLdapServerValue("zimbraNetworkAdminNGEnabled");
     if ($zimbraNetworkAdminNGEnabled eq "TRUE"){
        setLdapServerConfig($config{HOSTNAME}, 'zimbraNetworkAdminNGEnabled', 'FALSE');
@@ -7321,6 +7322,8 @@ sub applyConfig {
     }
 
     enableTLSv1_3();
+=======
+>>>>>>> p41
     addJDK17Options();
     progress ( "Starting servers..." );
     runAsZimbra ("/opt/zimbra/bin/zmcontrol stop");
@@ -7575,7 +7578,11 @@ sub setupCrontab {
         runAsZimbra("/opt/zimbra/bin/zmschedulebackup -A $backupSchedule[$i]");
       }
     }
+<<<<<<< HEAD
   } elsif ( -f "/opt/zimbra/bin/zmschedulebackup" && scalar @backupSchedule == 0 && !$newinstall && $nohsm) {
+=======
+  } elsif ( -f "/opt/zimbra/bin/zmschedulebackup" && scalar @backupSchedule == 0 && !$newinstall && $nohsm && $NG_backup eq "false") {
+>>>>>>> p41
     detail("crontab: No backup schedule found: installing default schedule.");
     qx($SU "/opt/zimbra/bin/zmschedulebackup -D" >> $logfile 2>&1);
   }
@@ -7691,6 +7698,7 @@ sub resumeConfiguration {
   }
 }
 
+<<<<<<< HEAD
 sub enableTLSv1_3 {
 	if (isInstalled("zimbra-proxy") && isEnabled("zimbra-proxy")) {
 		progress( "Setting zimbraReverseProxySSLProtocols...");
@@ -7754,6 +7762,8 @@ sub enableTLSv1_3 {
 	}
 }
 
+=======
+>>>>>>> p41
 sub addJDK17Options {
 	if (isInstalled("zimbra-core")) {
 		progress( "Setting java options...");
