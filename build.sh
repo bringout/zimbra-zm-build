@@ -6,7 +6,7 @@ RELEASE=9.0.1
 OS=RHEL9_x86_64
 PKG_OS_TAG=RHEL
 
-export RPM_BUILD_ROOT=/tmp
+export RPM_BUILD_ROOT=/home/build/rpmbuild
 
 export PKG_OS_TAG
 
