@@ -778,7 +778,7 @@ sub GetBuildArch()
 sub GetPkgOsTag()
 {
    my $b_os = $CFG{BUILD_OS};
-
+   print "b_os=", $b_os;
    return "u$1"
      if ( $b_os =~ /UBUNTU([0-9]+)_/ );
 
