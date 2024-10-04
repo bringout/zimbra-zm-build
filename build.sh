@@ -9,6 +9,7 @@ RC=XBRING
 OS=RHEL9_x86_64
 Z_RELEASE=LIBERTY
 RELEASE=10.0.9
+export RPM_BUILD_ROOT=/home/build/rpmbuild
 
 export PKG_OS_TAG
 
