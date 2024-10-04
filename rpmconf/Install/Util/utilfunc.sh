@@ -2348,13 +2348,10 @@ getInstallPackages() {
       ifStoreSelectedY
     elif [ $i = "zimbra-modern-zimlets" ]; then
       ifStoreSelectedY
-<<<<<<< HEAD
     elif [ $i = "zimbra-zimlet-document-editor" ]; then
       ifStoreSelectedY
     elif [ $i = "zimbra-zimlet-classic-document-editor" ]; then
       ifStoreSelectedY
-=======
->>>>>>> p41
     elif [ $i = "zimbra-patch" ]; then
         if [ x"$ZIMBRAINTERNAL" = "xyes" ] && [ $STORE_SELECTED = "yes" ]; then
             askYN "Install $i" "Y"
@@ -2373,15 +2370,12 @@ getInstallPackages() {
         else
             response="$PROXY_SELECTED"
         fi
-<<<<<<< HEAD
     elif [ $i = "zimbra-ldap-patch" ]; then
 	if [ x"$ZIMBRAINTERNAL" = "xyes" ] && [ $LDAP_SELECTED = "yes" ]; then
             askYN "Install $i" "Y"
 	else
             response="$LDAP_SELECTED"
 	fi
-=======
->>>>>>> p41
     elif [ $i = "zimbra-license-extension" ]; then
       ifStoreSelectedY
     elif [ $i = "zimbra-network-store" ]; then
@@ -2821,11 +2815,7 @@ getPlatformVars() {
       PACKAGEEXT='rpm'
       PACKAGEQUERY='rpm -q'
       PACKAGEVERIFY='rpm -K'
-<<<<<<< HEAD
       if [ $PLATFORM = "RHEL6_64" ]; then
-=======
-      if [ $PLATFORM = "RHEL6_64" -o $PLATFORM = "RHEL7_64" -o $PLATFORM = "RHEL8_64" ]; then
->>>>>>> p41
          STORE_PACKAGES="libreoffice libreoffice-headless"
       fi
       if [ $PLATFORM = "RHEL7_64" -o $PLATFORM = "RHEL8_64" ]; then
