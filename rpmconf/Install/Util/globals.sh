@@ -38,11 +38,6 @@ zimbra-onlyoffice"
 SERVICES=""
 
 OPTIONAL_PACKAGES="zimbra-qatest \
-<<<<<<< HEAD
-=======
-zimbra-drive \
-zimbra-imapd \
->>>>>>> p41
 zimbra-license-tools \
 zimbra-license-extension \
 zimbra-network-store"
@@ -68,7 +63,6 @@ zimbra-zimlet-auth \
 zimbra-zimlet-briefcase-edit-lool \
 zimbra-network-modules-ng"
 
-<<<<<<< HEAD
 DEPRECATED_PACKAGES_IN_10="zimbra-zimlet-restore-contacts \
 zimbra-zimlet-duplicate-contacts"
 
@@ -76,16 +70,6 @@ MYDIR="$(CDPATH= cd "$(dirname "$0")" && pwd)"
 if [ "$(cat ${MYDIR}/.BUILD_TYPE)" == "NETWORK" ]; then
    OPTIONAL_PACKAGES="${OPTIONAL_PACKAGES} zimbra-modern-ui zimbra-modern-zimlets zimbra-zimlet-document-editor zimbra-zimlet-classic-document-editor zimbra-patch zimbra-mta-patch zimbra-proxy-patch zimbra-ldap-patch"
 fi
-=======
-MYDIR="$(CDPATH= cd "$(dirname "$0")" && pwd)"
-if [ "$(cat ${MYDIR}/.BUILD_TYPE)" == "NETWORK" ]; then
-   OPTIONAL_PACKAGES="${OPTIONAL_PACKAGES} zimbra-modern-ui zimbra-modern-zimlets zimbra-patch zimbra-mta-patch zimbra-proxy-patch"
-fi
-
-CHAT_PACKAGES="zimbra-chat \
-zimbra-connect \
-zimbra-talk"
->>>>>>> p41
 
 PACKAGE_DIR="$(CDPATH= cd "$(dirname "$0")" && pwd)/packages"
 
