@@ -9,6 +9,7 @@ RC=XBRING
 OS=RHEL9_x86_64
 Z_RELEASE=DAFFODIL
 RELEASE=10.1.2
+export RPM_BUILD_ROOT=/home/build/rpmbuild
 
 export PKG_OS_TAG
 
