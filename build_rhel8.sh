@@ -2,6 +2,8 @@
 
 echo 10.1.x brach
 
+sudo bash install_rsync.sh
+
 DEF_TAGS="10.1.2,10.1.1,10.1.0"
 
 BUILD_ARCH=x86_64
