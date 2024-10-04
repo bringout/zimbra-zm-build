@@ -3,6 +3,7 @@
 BUILD_ARCH=x86_64
 RC=XBRING
 RELEASE=9.0.1
+OS=RHEL_9
 PKG_OS_TAG=RHEL
 
 export PKG_OS_TAG
@@ -12,7 +13,7 @@ export PKG_OS_TAG
 	--build-release-no=$RELEASE --build-type=FOSS --build-release=KEPLER --build-release-candidate=$RC \
 	--build-thirdparty-server=files.zimbra.com \
 	--build-arch=$BUILD_ARCH \
-	--build-os=RHEL9 \
+	--build-os=$OS \
 	--no-interactive
 
 
