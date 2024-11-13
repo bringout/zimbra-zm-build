@@ -4,13 +4,13 @@ echo 10.1.x brach
 
 sudo bash install_rsync.sh
 
-DEF_TAGS="10.1.2,10.1.1,10.1.0"
+DEF_TAGS="10.1.3,10.1.2,10.1.1,10.1.0"
 
 BUILD_ARCH=x86_64
 RC=XBRING
 OS=RHEL8_64
 Z_RELEASE=DAFFODIL
-RELEASE=10.1.2
+RELEASE=10.1.3
 export RPM_BUILD_ROOT=/home/build/rpmbuild
 
 export PKG_OS_TAG
